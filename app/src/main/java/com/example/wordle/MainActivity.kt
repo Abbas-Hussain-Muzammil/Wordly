@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
 
     private val guesses = mutableListOf<String>()
     private val results = mutableListOf<String>()
+    private val words = mutableListOf<String>()
+    val wordToGuess = FourLetterWordList.getRandomFourLetterWord()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         /** Now I have to catch the user's input and compare it to the random word. */
         val guessWordTextView: TextView = findViewById(R.id.guessEditText)
+         val feedbackTextView: TextView = findViewById(R.id.feedbackTextView)
         val guessWord = guessWordTextView.text.toString().uppercase()
 
         val submitButton: Button = findViewById(R.id.submitGuessButton)
@@ -38,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             val result = checkGuess(guessWord)
+            feedbackTextView.text = result
             results.add(result)
             guesses.add(guessWord)
             guessWordTextView.text = ""
@@ -58,15 +62,16 @@ class MainActivity : AppCompatActivity() {
         val resultTextView: TextView = findViewById(R.id.resultTextView)
         val stringBuilder = StringBuilder()
         for (i in guesses.indices) {
-            stringBuilder.append("#${i + 1} Guess:  ${guesses[i]}  Result: ${results[i]}\n\n")
+            stringBuilder.append("#${i + 1} Guess:  ${guesses[i]}  Target Word: ${words[i]}\n\n")
         }
         resultTextView.text = stringBuilder.toString()
         Toast.makeText(this, "Game Over: No more guesses!", Toast.LENGTH_SHORT).show()
     }
 
     private fun checkGuess(guess: String) : String {
-        val wordToGuess = FourLetterWordList.getRandomFourLetterWord()
+
         Log.d("WordToGuess", wordToGuess)
+        words.add(wordToGuess)
         var result = ""
         for (i in 0..3) {
             if (guess[i] == wordToGuess[i]) {

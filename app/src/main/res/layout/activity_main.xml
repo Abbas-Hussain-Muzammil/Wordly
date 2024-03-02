@@ -24,7 +24,7 @@
         android:id="@+id/feedbackTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wordly"
+        android:text="Wordly - "
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/targetWordTextView"
         app:layout_constraintStart_toStartOf="parent"
